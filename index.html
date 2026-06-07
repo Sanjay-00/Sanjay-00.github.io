@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sanjay Dutta — AI Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --accent: #00e5a0;
+      --accent2: #0066ff;
+      --text: #e8e8e8;
+      --muted: #666;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+    }
+    .cursor-ring {
+      width: 32px; height: 32px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.4;
+      transition: all 0.15s ease;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+    }
+    nav.scrolled { border-color: var(--border); }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-size: clamp(52px, 9vw, 120px);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero-name .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1px #333;
+    }
+    .hero-name .accent { color: var(--accent); }
+
+    .hero-desc {
+      max-width: 520px;
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .badge {
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .badge.active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0,229,160,0.05);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+    .btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      font-weight: 500;
+    }
+    .btn-primary:hover { background: #00ffb3; transform: translateY(-2px); }
+    .btn-ghost {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 48px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.2s forwards;
+    }
+    .hero-scroll::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--muted);
+    }
+
+    /* Sections */
+    section {
+      padding: 120px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 64px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-text {
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.9;
+      color: #999;
+    }
+    .about-text p + p { margin-top: 20px; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+    }
+    .stat-num {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: start;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s;
+    }
+    .project-card:hover { border-color: #2a2a2a; background: #131313; }
+    .project-card:hover::before { transform: scaleY(1); }
+
+    .project-meta {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .project-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .project-desc {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      max-width: 600px;
+    }
+    .project-impact {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      padding: 8px 14px;
+      border: 1px solid rgba(0,229,160,0.2);
+      background: rgba(0,229,160,0.04);
+      display: inline-block;
+      margin-bottom: 20px;
+      border-radius: 2px;
+    }
+    .project-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+    }
+    .project-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .project-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .project-link:hover { color: var(--accent); }
+    .project-link svg { width: 14px; height: 14px; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+    }
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .skill-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .skill-item {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .skill-item::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Experience */
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      padding-top: 4px;
+    }
+    .exp-role {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      letter-spacing: 0.06em;
+    }
+    .exp-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .exp-points li {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      padding-left: 16px;
+      position: relative;
+    }
+    .exp-points li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    /* Contact */
+    .contact-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-inner::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-title {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .contact-sub {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+    .contact-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    footer span { color: var(--accent); }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      section { padding: 80px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      .project-card { grid-template-columns: 1fr; }
+      .project-links { flex-direction: row; align-items: flex-start; }
+      .contact-inner { padding: 48px 24px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-logo">sanjay.dutta</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-tag">// AI Engineer · Fintech · NBFC Domain</div>
+  <h1 class="hero-name">
+    Sanjay<br>
+    <span class="line2">Dutta<span class="accent">.</span></span>
+  </h1>
+  <p class="hero-desc">
+    Building AI agents for Indian lending workflows.<br>
+    10 months inside Shriram Finance — portfolio analytics across 147 branches, 14 regions, 10,000+ monthly loan accounts.
+  </p>
+  <div class="hero-badges">
+    <span class="badge active">🟢 Open to Work</span>
+    <span class="badge">📍 Mumbai → Bangalore</span>
+    <span class="badge">🎓 MNNIT Allahabad '25</span>
+    <span class="badge">⚡ 30-day notice</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View Projects</a>
+    <a href="https://linkedin.com/in/sanjay-dutta-ai" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+    <a href="https://github.com/Sanjay-00" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+  </div>
+  <div class="hero-scroll">scroll to explore</div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label reveal">01 · About</div>
+  <h2 class="section-title reveal">Who I am.</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I'm a <strong>B.Tech graduate from MNNIT Allahabad (2025)</strong> working as Associate Business Trainee in Portfolio Analytics at Shriram Finance Limited, Mumbai.
+      </p>
+      <p>
+        Over the last 10 months I independently built <strong>four production AI tools</strong> that solve real NBFC workflow problems — not tutorial projects. Each one is live, deployed, and built on actual Shriram Finance data and workflows.
+      </p>
+      <p>
+        My edge is the intersection of <strong>deep NBFC domain knowledge</strong> (DPD, SMA, NPA, CAM, collections MIS, delinquency analysis) and hands-on AI engineering (LangGraph, Gemini, agentic pipelines). I understand the problem before I write the code.
+      </p>
+      <p>
+        Targeting <strong>AI Engineer / Applied AI roles</strong> in fintech. Open to relocating to Bangalore, Gurgaon, Hyderabad, or Pune.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat">
+        <div class="stat-num">147+</div>
+        <div class="stat-label">Branches covered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">14</div>
+        <div class="stat-label">Regions analyzed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10K+</div>
+        <div class="stat-label">Monthly loan accounts</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Live AI tools built</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="max-width:1100px;">
+  <div class="section-label reveal">02 · Projects</div>
+  <h2 class="section-title reveal">Stuff I've built.</h2>
+  <div class="projects-grid">
+
+    <!-- CollectionIQ -->
+    <div class="project-card reveal">
+      <div>
+        <div class="project-meta">Lead AI Project · Live</div>
+        <div class="project-name">CollectionIQ</div>
+        <div class="project-desc">
+          Self-serve portfolio intelligence for NBFC collection leaders. Plain-English query engine over LCC data — leaders get answers in under 30 seconds instead of waiting hours for analyst reports. Two LangGraph pipelines: query pipeline (4 agents) and report pipeline (automated HTML + email dispatch).
+        </div>
+        <div class="project-impact">⚡ 3-hour analyst workflow → 30-second self-serve query</div>
+        <div class="project-tags">
+          <span class="tag">LangGraph</span>
+          <span class="tag">Gemini 2.0 Flash</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">SMTP</span>
+          <span class="tag">Plotly</span>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://collectioniq.streamlit.app" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Live Demo
+        </a>
+        <a href="https://github.com/Sanjay-00/CollectionIQ" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- FinSight -->
+    <div class="project-card reveal">
+      <div>
+        <div class="project-meta">AI Underwriting · Live</div>
+        <div class="project-name">FinSight</div>
+        <div class="project-desc">
+          AI-assisted NBFC underwriting tool. Ingests sanction emails, runs 15 deterministic flags (LTV, IDV, insurance gap, vehicle age, CIR score, FTU/FTB classification), generates risk narratives and remarks analysis using Gemini 2.0 Flash. Built for underwriting roles and credit teams.
+        </div>
+        <div class="project-impact">⚡ 15 deterministic credit flags · Automated risk narrative generation</div>
+        <div class="project-tags">
+          <span class="tag">Gemini 2.0 Flash</span>
+          <span class="tag">Python</span>
+          <span class="tag">Credit Risk</span>
+          <span class="tag">LTV / IDV</span>
+          <span class="tag">FTU / FTB</span>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Sanjay-00/AI-Loan-analysis" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- CAMpilot -->
+    <div class="project-card reveal">
+      <div>
+        <div class="project-meta">Automation · Live</div>
+        <div class="project-name">CAMpilot</div>
+        <div class="project-desc">
+          Automates CIBIL report extraction from CRIF and TransUnion PDFs. Rule-based regex with self-validation, LangChain + Gemini fallback for edge cases. Outputs formatted Excel with DPD colour coding — eliminates manual data entry from credit appraisal workflows.
+        </div>
+        <div class="project-impact">⚡ Eliminates manual CIBIL data entry from CAM preparation</div>
+        <div class="project-tags">
+          <span class="tag">PyMuPDF</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Regex</span>
+          <span class="tag">OpenPyXL</span>
+          <span class="tag">CRIF</span>
+          <span class="tag">TransUnion</span>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Sanjay-00/CAMpilot" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- LCC Consolidator -->
+    <div class="project-card reveal">
+      <div>
+        <div class="project-meta">Automation · Live</div>
+        <div class="project-name">LCC Consolidator</div>
+        <div class="project-desc">
+          Consolidates RE-wise LCC PDFs into a Master Excel for branch managers. Eliminates manual monthly copy-paste across branches — deployed live and actively used. Built with PyMuPDF, OpenPyXL, and Streamlit.
+        </div>
+        <div class="project-impact">⚡ ~95% reduction in monthly consolidation time</div>
+        <div class="project-tags">
+          <span class="tag">PyMuPDF</span>
+          <span class="tag">OpenPyXL</span>
+          <span class="tag">Streamlit</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+      <div class="project-links">
+        <a href="https://lcc-pdf2excel.streamlit.app" target="_blank" class="project-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Live Demo
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" style="max-width:1100px;">
+  <div class="section-label reveal">03 · Skills</div>
+  <h2 class="section-title reveal">What I work with.</h2>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">AI / ML</div>
+      <div class="skill-list">
+        <div class="skill-item">LangGraph · Agentic Pipelines</div>
+        <div class="skill-item">Google Gemini 2.0 Flash</div>
+        <div class="skill-item">LangChain</div>
+        <div class="skill-item">Prompt Engineering</div>
+        <div class="skill-item">Multi-agent Orchestration</div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Data & Analytics</div>
+      <div class="skill-list">
+        <div class="skill-item">Python · Pandas · NumPy</div>
+        <div class="skill-item">SQL</div>
+        <div class="skill-item">Power BI</div>
+        <div class="skill-item">Plotly · Data Visualization</div>
+        <div class="skill-item">Excel · VBA Automation</div>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">NBFC Domain</div>
+      <div class="skill-list">
+        <div class="skill-item">DPD · SMA · NPA Buckets</div>
+        <div class="skill-item">CAM · Credit Appraisal</div>
+        <div class="skill-item">LTV · FOIR · IDV</div>
+        <div class="skill-item">Collections MIS</div>
+        <div class="skill-item">Delinquency Analysis</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="max-width:1100px;">
+  <div class="section-label reveal">04 · Experience</div>
+  <h2 class="section-title reveal">Where I've worked.</h2>
+
+  <div class="exp-item reveal">
+    <div class="exp-date">Aug 2024 – Present<br>Mumbai</div>
+    <div>
+      <div class="exp-role">Associate Business Trainee</div>
+      <div class="exp-company">Shriram Finance Limited · Portfolio Analytics</div>
+      <ul class="exp-points">
+        <li>Portfolio analytics across 147+ branches and 14 regions — 10,000+ monthly loan accounts</li>
+        <li>Automated MIS reports from 5-6 hours to ~30 minutes (~90% time reduction)</li>
+        <li>Built CollectionIQ, FinSight, CAMpilot, and LCC Consolidator independently</li>
+        <li>100% recovery resolution across Dec–Feb collection cycle</li>
+        <li>Power BI dashboards for delinquency tracking and executive reporting</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="max-width:1100px;">
+  <div class="contact-inner reveal">
+    <div class="section-label" style="justify-content:center; margin-bottom:24px;">05 · Contact</div>
+    <h2 class="contact-title">Let's talk.</h2>
+    <p class="contact-sub">
+      Open to AI Engineer and Applied AI roles in fintech.<br>
+      If you're building AI for lending — I'd love to connect.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:sanjaydutta2830@gmail.com" class="btn btn-primary">sanjaydutta2830@gmail.com</a>
+      <a href="https://linkedin.com/in/sanjay-dutta-ai" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/Sanjay-00" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Sanjay Dutta</span></p>
+  <p>Built with HTML · Hosted on <span>GitHub Pages</span></p>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.transform = `translate(${mx - 4}px, ${my - 4}px)`;
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) *.12;
+    ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
