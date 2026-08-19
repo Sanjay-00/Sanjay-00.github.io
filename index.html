@@ -85,6 +85,15 @@
     .category-label { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: -0.01em; margin: 32px 0 4px; padding-top: 8px; }
     .arch-block { background: var(--surface); border: 1px solid var(--border); padding: 32px 40px; margin-bottom: 40px; }
     .arch-label { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 24px; }
+    .arch-block summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; user-select: none; }
+    .arch-block summary::-webkit-details-marker { display: none; }
+    .arch-block[open] summary { margin-bottom: 24px; }
+    .arch-toggle { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; text-transform: none; border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px; transition: all 0.2s; }
+    .arch-block summary:hover .arch-toggle { color: var(--accent); border-color: rgba(0,229,160,0.3); }
+    .arch-block[open] .arch-toggle::before { content: '▴ Hide'; }
+    .arch-block:not([open]) .arch-toggle::before { content: '▾ View'; }
+    .arch-toggle { font-size: 0; }
+    .arch-toggle::before { font-size: 10px; }
     .arch-pipeline { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
     .arch-row { display: flex; align-items: center; gap: 12px; }
     .arch-node { background: var(--bg); border: 1px solid var(--border); padding: 10px 18px; border-radius: 2px; min-width: 200px; }
@@ -307,7 +316,7 @@
   </p>
   <div class="hero-badges">
     <span class="badge active">Used Daily by Business Teams</span>
-    <span class="badge active">Portfolio Analytics · Shriram Finance</span>
+    <span class="badge active">Applied AI &amp; Automation · Shriram Finance</span>
     <span class="badge">📈 Lending &amp; Credit Risk</span>
   </div>
   <div class="hero-cta">
@@ -333,16 +342,17 @@
   <div class="exp-item reveal">
     <div class="exp-date">Aug 2024 · Present<br>Mumbai</div>
     <div>
-      <div class="exp-role">Portfolio Analytics and Applied AI</div>
+      <div class="exp-role">Applied AI &amp; Automation</div>
       <div class="exp-company">Shriram Finance Limited · Leading NBFC</div>
       <ul class="exp-points">
-        <li>Own portfolio analytics across 147+ branches and 16 regions covering 10,000+ monthly loan accounts</li>
-        <li><strong>CollectionIQ</strong> — portfolio insight turnaround down from hours to under one minute, used daily by 10+ collection leaders and regional heads</li>
-        <li><strong>AutoCAM</strong> — CIBIL bureau extraction across CRIF and TransUnion formats, self-validated, 60 minutes down to under 1 minute per case</li>
-        <li><strong>FinSight</strong> — hybrid deterministic and AI underwriting workflow, 15 rule-based validations plus Gemini risk narratives, 70% less review effort</li>
-        <li><strong>LCC Consolidator</strong> — pixel-coordinate clustering with dynamic column handling, 97% less manual effort · <strong>Get Data Forge</strong> — repetitive data preparation eliminated</li>
-        <li>Recurring MIS reporting effort down 90% through VBA and Power Query automation</li>
-        <li>Delinquency, SMA, and NPA tracked across 16 regions through Power BI dashboards</li>
+        <li>Own portfolio analytics: 147+ branches, 16 regions, 10,000+ monthly accounts</li>
+        <li><strong>CollectionIQ:</strong> hours to under 1 min, 10+ leaders, daily use</li>
+        <li><strong>AutoCAM:</strong> bureau extraction, self-validated, 60 min to under 1 min</li>
+        <li><strong>FinSight:</strong> 15 rule checks + AI narratives, 70% less review effort</li>
+        <li><strong>LCC Consolidator:</strong> dynamic extraction, 97% less manual effort</li>
+        <li><strong>Get Data Forge:</strong> repetitive data prep eliminated</li>
+        <li>MIS reporting: 90% less effort via VBA and Power Query</li>
+        <li>Delinquency, SMA, NPA tracked across 16 regions via Power BI</li>
       </ul>
     </div>
   </div>
@@ -354,19 +364,16 @@
   <div class="about-grid">
     <div class="about-text reveal">
       <p>
-        Working in lending taught me that businesses rarely suffer from a lack of data. They suffer because useful information reaches decision makers too slowly. Most of what I build exists to remove that delay.
+        Working in lending taught me businesses rarely lack data. They lack speed getting it to decision makers. I build systems that remove that delay.
       </p>
       <p>
-        B.Tech graduate from <strong>MNNIT Allahabad (2025, CGPA 8.02)</strong>, working in Portfolio Analytics and Applied AI at Shriram Finance Limited, covering 147+ branches and 16 regions across India.
-      </p>
-      <p>
-        I observe workflows, find the recurring friction, and build reliable systems to eliminate it. Sometimes the right answer is Python automation. Sometimes SQL. Sometimes OCR. Sometimes AI. Sometimes a hybrid.
+        <strong>MNNIT Allahabad (2025, CGPA 8.02)</strong>. Applied AI and Automation at Shriram Finance, 147+ branches, 16 regions.
       </p>
       <p class="about-standout">
         Technology follows the problem.<br>Not the other way around.
       </p>
       <p>
-        In lending, incorrect numbers matter more than slow numbers. That is why I keep business calculations deterministic and use AI only for reasoning and interpretation, never for the numbers themselves.
+        Incorrect numbers cost more than slow ones. Business math stays deterministic. AI only reasons and explains, never computes.
       </p>
     </div>
     <div class="about-stats reveal">
@@ -421,7 +428,6 @@
         <div class="metric"><div class="val">100+</div><div class="lbl">Queries / Day</div></div>
         <div class="metric"><div class="val">70k+</div><div class="lbl">Accounts</div></div>
         <div class="metric"><div class="val">&lt;1min</div><div class="lbl">Insight Time</div></div>
-        <div class="metric"><div class="val">147+</div><div class="lbl">Branches</div></div>
       </div>
       <div class="why-box">
         <div class="why-label">Why AI never computes the KPIs</div>
@@ -455,8 +461,8 @@
     </div>
   </div>
 
-  <div class="arch-block reveal">
-    <div class="arch-label">Architecture · AI Query Pipeline (LangGraph)</div>
+  <details class="arch-block reveal">
+    <summary class="arch-label">Architecture · AI Query Pipeline (LangGraph) <span class="arch-toggle">▾ View</span></summary>
     <div class="arch-pipeline">
       <div class="arch-row">
         <div class="arch-node">
@@ -502,7 +508,7 @@
     </div>
     <div class="arch-note">Orchestrated with LangGraph · Fast-path view serves pre-computed results without any LLM call · Stateless per query</div>
     <div class="arch-note" style="margin-top:10px; color: rgba(0,229,160,0.6);">LLMs never touch raw calculations. All business metrics computed deterministically in Pandas.</div>
-  </div>
+  </details>
 
   <div class="other-projects-label reveal">Other Projects</div>
   <div class="projects-grid">
@@ -688,7 +694,7 @@
         </div>
       </div>
       <div class="project-links">
-        <a href="https://lcc-pdf2-excel.streamlit.app" target="_blank" class="project-link demo-link">
+        <a href="https://lcc-pdf2excel.streamlit.app" target="_blank" class="project-link demo-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
           Live Demo
         </a>
