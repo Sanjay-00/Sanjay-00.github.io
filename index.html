@@ -166,7 +166,7 @@
     .workon-meta { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; padding-top: 14px; border-top: 1px solid var(--border); }
     .audience-list { list-style: none; flex: 1; margin-bottom: 20px; display: flex; flex-direction: column; gap: 9px; }
     .audience-list li { font-family: var(--mono); font-size: 12px; color: var(--muted); line-height: 1.5; padding-left: 16px; position: relative; }
-    .audience-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+    .audience-list li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
     .ss-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 24px; margin-bottom: 4px; }
     .ss-wrap { display: flex; flex-direction: column; gap: 6px; }
     .ss-caption { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
@@ -202,7 +202,7 @@
     .project-list { list-style: none; margin-bottom: 20px; max-width: 620px; display: flex; flex-direction: column; gap: 9px; }
     .case-label { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; opacity: 0.85; }
     .project-list li { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height: 1.6; padding-left: 18px; position: relative; }
-    .project-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
+    .project-list li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
     .project-impact { font-family: var(--mono); font-size: 12px; color: var(--accent); padding: 8px 14px; border: 1px solid rgba(0,229,160,0.2); background: rgba(0,229,160,0.04); display: inline-block; margin-bottom: 20px; border-radius: 2px; }
     .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
     .tag { font-family: var(--mono); font-size: 10px; padding: 4px 10px; border: 1px solid var(--border); color: var(--muted); border-radius: 2px; letter-spacing: 0.06em; transition: all 0.2s; }
@@ -329,7 +329,7 @@
 <div class="credibility-bar">
   <div class="cred-item">100+ Queries a Day · CollectionIQ</div>
   <div class="cred-divider"></div>
-  <div class="cred-item">70k+ Account Portfolio</div>
+  <div class="cred-item">100k+ Account Portfolio</div>
   <div class="cred-divider"></div>
   <div class="cred-item">Hours → Under 1 Minute</div>
   <div class="cred-divider"></div>
@@ -340,16 +340,16 @@
   <div class="section-label reveal"><span class="led"></span>01 · Experience<span class="lbl-line"></span></div>
   <h2 class="section-title reveal">Where I have worked.</h2>
   <div class="exp-item reveal">
-    <div class="exp-date">Aug 2024 · Present<br>Mumbai</div>
+    <div class="exp-date">Jul 2025 · Present<br>Mumbai</div>
     <div>
       <div class="exp-role">Applied AI &amp; Automation</div>
       <div class="exp-company">Shriram Finance Limited · Leading NBFC</div>
       <ul class="exp-points">
-        <li>Own portfolio analytics: 147+ branches, 16 regions, 10,000+ monthly accounts</li>
+        <li>Own portfolio analytics: 147+ branches, 16 regions, 100k+ accounts</li>
         <li><strong>CollectionIQ:</strong> hours to under 1 min, 10+ leaders, daily use</li>
         <li><strong>AutoCAM:</strong> bureau extraction, self-validated, 60 min to under 1 min</li>
-        <li><strong>FinSight:</strong> 15 rule checks + AI narratives, 70% less review effort</li>
-        <li><strong>LCC Consolidator:</strong> dynamic extraction, 97% less manual effort</li>
+        <li><strong>FinSight:</strong> 5 document engines, 30+ risk and fraud checks, evidence-linked AI review, 70% less review effort</li>
+        <li><strong>LCC Consolidator:</strong> 91 column master dataset, under 0.4s per PDF, 97% less manual effort</li>
         <li><strong>Get Data Forge:</strong> repetitive data prep eliminated</li>
         <li>MIS reporting: 90% less effort via VBA and Power Query</li>
         <li>Delinquency, SMA, NPA tracked across 16 regions via Power BI</li>
@@ -426,7 +426,7 @@
       </ul>
       <div class="metric-box">
         <div class="metric"><div class="val">100+</div><div class="lbl">Queries / Day</div></div>
-        <div class="metric"><div class="val">70k+</div><div class="lbl">Accounts</div></div>
+        <div class="metric"><div class="val">100k+</div><div class="lbl">Accounts</div></div>
         <div class="metric"><div class="val">&lt;1min</div><div class="lbl">Insight Time</div></div>
       </div>
       <div class="why-box">
@@ -517,40 +517,54 @@
 
     <div class="project-card reveal"><div class="glow-spot"></div>
       <div>
-        <div class="card-top-row"><span class="tag-pill">AI Underwriting · Live</span><span class="status-badge progress"><span class="dot"></span>In Progress</span></div>
+        <div class="card-top-row"><span class="tag-pill">AI Underwriting · Private Build</span><span style="display:flex; gap:8px; flex-wrap:wrap;"><span class="status-badge progress"><span class="dot"></span>In Progress</span></span></div>
         <div class="project-name">FinSight</div>
+        <div class="case-sub" style="font-size:14px; color:var(--muted,#9aa); margin:-6px 0 18px; line-height:1.6;">Evidence-first decision support for lending, with cross-document verification and AI-powered assessment.</div>
         <div class="case-label">The Problem</div>
         <ul class="project-list">
-          <li>Underwriters spend significant time validating borrower information</li>
-          <li>Reviewing bureau reports and preparing credit assessments eats the day</li>
+          <li>Underwriters re-key and cross-check bank statements, ITRs, bureau reports and KYC by hand</li>
+          <li>Fraud and mismatches hide between documents, not inside any single one</li>
         </ul>
         <div class="case-label">The Solution</div>
         <ul class="project-list">
-          <li>AI only interprets qualitative remarks branch managers write</li>
-          <li>Deterministic logic handles every numerical flag</li>
+          <li>5 specialist document engines turn each file type into structured, validated data</li>
+          <li>30+ deterministic risk, fraud and reconciliation checks run across documents, no AI in the math</li>
+          <li>AI explains, never decides: grounded review, case Q&amp;A and bounded investigation agents</li>
+          <li>Every claim is citation validated and linked to its source evidence, so each assessment is auditable</li>
         </ul>
         <div class="metric-box">
           <div class="metric"><div class="val">70%</div><div class="lbl">Review Cut</div></div>
-          <div class="metric"><div class="val">15</div><div class="lbl">Checks</div></div>
-          <div class="metric"><div class="val">&lt;10s</div><div class="lbl">Per Case</div></div>
+          <div class="metric"><div class="val">30+</div><div class="lbl">Checks</div></div>
+          <div class="metric"><div class="val">5</div><div class="lbl">Doc Engines</div></div>
+          <div class="metric"><div class="val">&lt;30s</div><div class="lbl">Per Case</div></div>
         </div>
+        <details class="arch-block" style="margin:22px 0 18px; padding:20px 24px;">
+          <summary class="arch-label">Architecture · Case Pipeline <span class="arch-toggle">▾ View</span></summary>
+          <div class="arch-pipeline">
+            <div class="arch-row"><div class="arch-node"><div class="arch-node-name">Case Upload</div><div class="arch-node-sub">Bank statements · ITR · bureau · KYC · supporting documents</div></div></div>
+            <div class="arch-arrow-down">↓</div>
+            <div class="arch-row"><div class="arch-node accent-node"><div class="arch-node-name">5 Document Engines</div><div class="arch-node-sub">RapidOCR and layout parsing · structured extraction · schema validated</div></div></div>
+            <div class="arch-arrow-down">↓</div>
+            <div class="arch-row"><div class="arch-node accent-node"><div class="arch-node-name">30+ Deterministic Checks</div><div class="arch-node-sub">Risk · fraud · cross-document reconciliation · pure Python, no LLM</div></div></div>
+            <div class="arch-arrow-down">↓</div>
+            <div class="arch-row"><div class="arch-node accent-node"><div class="arch-node-name">Grounded AI Review</div><div class="arch-node-sub">Gemini · case Q&amp;A · bounded investigation agents · citation validation</div></div></div>
+            <div class="arch-arrow-down">↓</div>
+            <div class="arch-row"><div class="arch-node result-node"><div class="arch-node-name">Auditable Assessment</div><div class="arch-node-sub">Every finding linked to source evidence · stored in PostgreSQL</div></div></div>
+          </div>
+          <div class="arch-note" style="margin-top:10px; color: rgba(0,229,160,0.6);">Deterministic logic computes. AI reasons and explains, only over validated evidence.</div>
+        </details>
         <div class="project-tags">
-          <span class="tag tag-core">Gemini 2.0 Flash</span>
-          <span class="tag tag-core">LangChain</span>
-          <span class="tag">PyMuPDF</span>
+          <span class="tag tag-core">Document Intelligence</span>
+          <span class="tag tag-core">Gemini</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">SQLAlchemy</span>
+          <span class="tag">Alembic</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">RapidOCR</span>
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
           <span class="tag">Python</span>
-          <span class="tag">Streamlit</span>
         </div>
-      </div>
-      <div class="project-links">
-        <a href="https://finnsight.streamlit.app" target="_blank" class="project-link demo-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
-          Live Demo
-        </a>
-        <a href="https://github.com/Sanjay-00/AI-Loan-analysis" target="_blank" class="project-link gh-link">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
       </div>
     </div>
 
@@ -682,9 +696,9 @@
           <li>Deterministic and repeatable, same PDF, same output, every run</li>
         </ul>
         <div class="metric-box">
-          <div class="metric"><div class="val">&lt;30s</div><div class="lbl">Full Consolidation</div></div>
+          <div class="metric"><div class="val">&lt;0.4s</div><div class="lbl">Per PDF</div></div>
           <div class="metric"><div class="val">97%</div><div class="lbl">Effort Cut</div></div>
-          <div class="metric"><div class="val">Dynamic</div><div class="lbl">Column Handling</div></div>
+          <div class="metric"><div class="val">91</div><div class="lbl">Column Master Dataset</div></div>
         </div>
         <div class="project-tags">
           <span class="tag tag-core">Pixel-coordinate Clustering</span>
@@ -871,10 +885,12 @@
       <div class="skill-list">
         <div class="skill2 core"><span class="lv"></span><span class="nm">LangGraph</span><span class="used"><b>Used in</b>CollectionIQ · Blog Writing Agent</span></div>
         <div class="skill2 core"><span class="lv"></span><span class="nm">Gemini 2.5 Flash-Lite</span><span class="used"><b>Used in</b>CollectionIQ query and insight agents</span></div>
-        <div class="skill2 core"><span class="lv"></span><span class="nm">LangChain</span><span class="used"><b>Used in</b>AutoCAM · FinSight</span></div>
+        <div class="skill2 core"><span class="lv"></span><span class="nm">LangChain</span><span class="used"><b>Used in</b>AutoCAM</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Multi-agent Orchestration</span><span class="used"><b>Used in</b>CollectionIQ 4-agent pipeline</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">RAG · Tavily</span><span class="used"><b>Used in</b>Blog Writing Agent research node</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Prompt Engineering</span><span class="used"><b>Used in</b>Every agent across all projects</span></div>
+        <div class="skill2 prof"><span class="lv"></span><span class="nm">Context Engineering</span><span class="used"><b>Used in</b>CollectionIQ · FinSight grounded review</span></div>
+        <div class="skill2 prof"><span class="lv"></span><span class="nm">Evaluation · Structured Outputs</span><span class="used"><b>Used in</b>FinSight citation validation · Pydantic contracts</span></div>
       </div>
     </div>
     <div class="skill-group reveal">
@@ -883,7 +899,8 @@
         <div class="skill2 core"><span class="lv"></span><span class="nm">Python · Pandas · NumPy</span><span class="used"><b>Used in</b>Every project I've built</span></div>
         <div class="skill2 core"><span class="lv"></span><span class="nm">SQL</span><span class="used"><b>Used in</b>Portfolio analytics at Shriram Finance</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Power BI</span><span class="used"><b>Used in</b>Delinquency and NPA dashboards</span></div>
-        <div class="skill2 prof"><span class="lv"></span><span class="nm">PyMuPDF · Tesseract OCR</span><span class="used"><b>Used in</b>AutoCAM · LCC Consolidator</span></div>
+        <div class="skill2 prof"><span class="lv"></span><span class="nm">PyMuPDF · OCR</span><span class="used"><b>Used in</b>AutoCAM · LCC Consolidator · FinSight</span></div>
+        <div class="skill2 prof"><span class="lv"></span><span class="nm">Document Intelligence</span><span class="used"><b>Used in</b>FinSight 5 document engines</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Excel · VBA · Power Query</span><span class="used"><b>Used in</b>MIS reporting automation</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Classification · Regression · Feature Engineering</span><span class="used"><b>Used in</b>Vehicle Insurance Prediction, F1 0.87</span></div>
       </div>
@@ -891,7 +908,9 @@
     <div class="skill-group reveal">
       <div class="skill-group-title">Deployment</div>
       <div class="skill-list">
-        <div class="skill2 core"><span class="lv"></span><span class="nm">FastAPI · Docker</span><span class="used"><b>Used in</b>Vehicle Insurance MLOps pipeline</span></div>
+        <div class="skill2 core"><span class="lv"></span><span class="nm">FastAPI · Docker</span><span class="used"><b>Used in</b>FinSight · Vehicle Insurance MLOps pipeline</span></div>
+        <div class="skill2 prof"><span class="lv"></span><span class="nm">Pydantic · PostgreSQL</span><span class="used"><b>Used in</b>FinSight backend · Blog Writing Agent</span></div>
+        <div class="skill2 fam"><span class="lv"></span><span class="nm">React · TypeScript · Railway · Render</span><span class="used"><b>Used in</b>FinSight frontend and hosting</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">AWS</span><span class="used"><b>Used in</b>S3 model registry, ECR, EC2</span></div>
         <div class="skill2 prof"><span class="lv"></span><span class="nm">Azure</span><span class="used"><b>Used in</b>Azure DE Pipeline (Medallion architecture)</span></div>
         <div class="skill2 fam"><span class="lv"></span><span class="nm">Databricks · Delta Lake</span><span class="used"><b>Used in</b>Azure DE Pipeline (Medallion architecture)</span></div>
